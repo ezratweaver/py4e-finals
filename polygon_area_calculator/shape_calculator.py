@@ -1,4 +1,5 @@
 class Rectangle():
+
     def __init__(self, width, height):
         self.set_width(width)
         self.set_height(height)
@@ -36,9 +37,22 @@ class Rectangle():
         
         
 
-class Square():
-    pass
+class Square(Rectangle):
+    
+    def __init__(self, side):
+        self.side = side
+        self.set_side(side)
 
-rec1 = Rectangle(4, 4)
-rec2 = Rectangle(2, 2)
-
+    def __str__(self):
+        return f"Square(side={self.side})"
+    
+    def set_side(self, side):
+        self.side = side
+        self.width = side
+        self.height = side
+    
+    def set_height(self, height):
+        self.side = height
+    
+    def set_width(self, width):
+        self.side = width

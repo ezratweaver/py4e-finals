@@ -3,6 +3,9 @@ class Rectangle():
         self.set_width(width)
         self.set_height(height)
 
+    def __str__(self):
+        return f"Rectangle(width={self.width}, height={self.height})"
+
     def set_width(self, width):
         self.width = width
 
@@ -28,9 +31,14 @@ class Rectangle():
             picture = picture + row
         return picture
 
-    def get_amount_inside(self):
-        pass
+    def get_amount_inside(self, shape):
+        return int(self.get_area() / shape.get_area())
+        
+        
 
 class Square():
     pass
+
+rec1 = Rectangle(4, 4)
+rec2 = Rectangle(2, 2)
 

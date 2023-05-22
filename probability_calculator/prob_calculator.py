@@ -1,7 +1,6 @@
 import random
 import copy
 # Consider using the modules imported above.
-
 class Hat:
 
     def __init__(self, **kwargs):
@@ -13,28 +12,27 @@ class Hat:
     def draw(self, amount):
         if amount > len(self.contents):
             return self.contents
-        hat_instance = copy.copy(self.contents)
         pulled_balls = []
         for _ in range(amount):
-            pulled_ball = random.choice(hat_instance)
+            pulled_ball = random.choice(self.contents)
             pulled_balls.append(pulled_ball)
-            hat_instance.remove(pulled_ball)
+            self.contents.remove(pulled_ball)
         return pulled_balls
+    
+def compare_samples(sample, expected):
+    for x, y in expected.items():
+        if x not in sample or y > sample.get(x, 0):
+            return False
+    return True 
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     sucessful_experiments = 0
+    hat_instance = copy.copy(hat.contents)
     for _ in range(num_experiments):
         sample_balls = {}
         for ball in hat.draw(num_balls_drawn):
             sample_balls[ball] = sample_balls.get(ball, 0) + 1
-        print(f"Sample: {sample_balls} Expected: {expected_balls}")
-        if sample_balls == expected_balls:
-            sucessful_experiments = sucessful_experiments + 1
-    return sucessful_experiments
-
-hat1 = Hat(yellow=1, blue=1, green=6, red=6)
-
-probability = experiment(hat1, expected_balls={"red":2, "green" : 2}, 
-            num_balls_drawn=4, num_experiments=1000)
-
-print(probability)
+        if compare_samples(sample_balls, expected_balls):
+            sucessful_experiments += 1
+        hat.contents = copy.copy(hat_instance)
+    return sucessful_experiments / num_experiments

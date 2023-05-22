@@ -13,7 +13,7 @@ class Hat:
     def draw(self, amount):
         if amount > len(self.contents):
             return self.contents
-        hat_instance = self.contents
+        hat_instance = copy.copy(self.contents)
         pulled_balls = []
         for _ in range(amount):
             pulled_ball = random.choice(hat_instance)
